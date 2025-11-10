@@ -1,0 +1,25 @@
+{
+  "name": "@financial-dashboard/api",
+  "version": "1.0.0",
+  "description": "Financial Dashboard API Server",
+  "main": "server_sqlite.js",
+  "scripts": {
+    "start": "node server_sqlite.js",
+    "dev": "nodemon server_sqlite.js",
+    "ingest": "python ingest_data_sqlite.py",
+    "check": "node check_data.js",
+    "clean": "node clean_duplicates.js"
+  },
+  "dependencies": {
+    "express": "^4.21.1",
+    "cors": "^2.8.5",
+    "helmet": "^8.0.0",
+    "compression": "^1.7.5",
+    "sqlite3": "^5.1.7",
+    "dotenv": "^16.4.7",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}

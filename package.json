@@ -1,0 +1,21 @@
+{
+  "name": "financial-dashboard-ai",
+  "version": "1.0.0",
+  "description": "AI-powered Financial Dashboard with Invoice Processing",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "dev:web": "npm run dev --workspace=@financial-dashboard/web",
+    "dev:api": "npm run dev --workspace=@financial-dashboard/api",
+    "build": "npm run build --workspace=@financial-dashboard/web",
+    "start:api": "npm run start --workspace=@financial-dashboard/api",
+    "setup": "npm run ingest --workspace=@financial-dashboard/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
