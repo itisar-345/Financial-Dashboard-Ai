@@ -90,7 +90,7 @@ export default function PieChart({ data }: PieChartProps) {
           <div
             key={i}
             className="flex items-center gap-2 cursor-pointer transition-opacity"
-            opacity={hoveredIndex === null || hoveredIndex === i ? 1 : 0.5}
+            style={{ opacity: hoveredIndex === null || hoveredIndex === i ? 1 : 0.5 }}
             onMouseEnter={() => setHoveredIndex(i)}
             onMouseLeave={() => setHoveredIndex(null)}
           >
