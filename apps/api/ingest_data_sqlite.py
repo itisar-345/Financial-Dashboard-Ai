@@ -318,6 +318,54 @@ class SQLiteIngester:
         self.conn.commit()
         print("Data ingestion completed successfully")
     
+    def clean_duplicates(self):
+        """Remove duplicate invoices keeping only one per invoice_id"""
+        cursor = self.conn.cursor()
+        
+        # Temporarily disable foreign keys
+        cursor.execute("PRAGMA foreign_keys = OFF")
+        
+        # Delete related records first
+        cursor.execute("""
+            DELETE FROM line_items 
+            WHERE invoice_id IN (
+                SELECT id FROM invoices 
+                WHERE rowid NOT IN (
+                    SELECT MIN(rowid) 
+                    FROM invoices 
+                    GROUP BY invoice_id
+                )
+            )
+        """)
+        
+        cursor.execute("""
+            DELETE FROM payment_terms 
+            WHERE invoice_id IN (
+                SELECT id FROM invoices 
+                WHERE rowid NOT IN (
+                    SELECT MIN(rowid) 
+                    FROM invoices 
+                    GROUP BY invoice_id
+                )
+            )
+        """)
+        
+        # Delete duplicate invoices
+        cursor.execute("""
+            DELETE FROM invoices 
+            WHERE rowid NOT IN (
+                SELECT MIN(rowid) 
+                FROM invoices 
+                GROUP BY invoice_id
+            )
+        """)
+        
+        # Re-enable foreign keys
+        cursor.execute("PRAGMA foreign_keys = ON")
+        
+        self.conn.commit()
+        print("Duplicate invoices cleaned successfully")
+    
     def close(self):
         if self.conn:
             self.conn.close()
@@ -326,6 +374,7 @@ if __name__ == "__main__":
     ingester = SQLiteIngester()
     try:
         ingester.connect()
-        ingester.ingest_data("../src/assets/Analytics_Test_Data.json")
+        ingester.ingest_data("../../data/Analytics_Test_Data.json")
+        ingester.clean_duplicates()
     finally:
         ingester.close()

@@ -7,8 +7,7 @@
     "start": "node server_sqlite.js",
     "dev": "nodemon server_sqlite.js",
     "ingest": "python ingest_data_sqlite.py",
-    "check": "node check_data.js",
-    "clean": "node clean_duplicates.js"
+    "check": "node check_data.js"
   },
   "dependencies": {
     "express": "^4.21.1",
