@@ -9,8 +9,10 @@ Financial-Dashboard-Ai/
 ├── apps/
 │   ├── web/          # React frontend
 │   └── api/          # Node.js backend
-├── packages/
-│   └── shared/       # Shared types
+├── services/
+│   └── vanna/        # AI service for natural language queries
+├── data/
+│   └── Analytics_Test_Data.json  # Sample financial data
 └── package.json      # Root workspace
 ```
 
